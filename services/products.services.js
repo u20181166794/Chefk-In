@@ -45,10 +45,21 @@ class ProductsService {
         if (!product) {
             throw boom.notFound('Product not found');
         }
-        if (product.isBlock) {
+        if (!product.status) {
             throw boom.conflict('Product is block');
         }
         return product;
+    }
+
+    async findForCategory(category) {
+        const products = this.products.filter(item => item.category === category && item.status === true);
+        if (!products) {
+            throw boom.notFound('Products not found');
+        }
+        // if (!products.status) {
+        //     throw boom.conflict('Products is block');
+        // }
+        return products;
     }
 
     async update(id, changes) {

@@ -34,4 +34,8 @@ const getProductSchema = joi.object({
   id: id.required(),
 });
 
-module.exports = { createProductSchema, updateProductSchema, deleteProductSchema, getProductSchema }
+const getProductCategorySchema = joi.object({
+  category: category.required(),
+});
+
+module.exports = { createProductSchema, updateProductSchema, deleteProductSchema, getProductSchema, getProductCategorySchema }

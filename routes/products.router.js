@@ -2,7 +2,7 @@ const express = require('express');
 const ProductsService = require('./../services/products.services');
 
 const validatorHandler = require('./../middlewares/validator.handler');
-const { createProductSchema, updateProductSchema, deleteProductSchema, getProductSchema } = require('./../schemas/products.schemas');
+const { createProductSchema, updateProductSchema, deleteProductSchema, getProductSchema, getProductCategorySchema } = require('./../schemas/products.schemas');
 
 const router = express.Router();
 const service = new ProductsService();
@@ -18,6 +18,19 @@ router.get('/:id',
     try {
       const { id } = req.params;
       const products = await service.findOne(id);
+      res.json(products);
+    } catch (error) {
+      next(error);
+    }
+  }
+);
+
+router.get('/category/:category',
+  validatorHandler(getProductCategorySchema, 'params'),
+  async (req, res, next) => {
+    try {
+      const { category } = req.params;
+      const products = await service.findForCategory(category);
       res.json(products);
     } catch (error) {
       next(error);
