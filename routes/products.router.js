@@ -1,16 +1,22 @@
 const express = require('express');
-const ProductsService = require('./../services/products.services');
+const ProductsService = require('./../services/product.service');
 
 const validatorHandler = require('./../middlewares/validator.handler');
-const { createProductSchema, updateProductSchema, deleteProductSchema, getProductSchema, getProductCategorySchema } = require('./../schemas/products.schemas');
+const { createProductSchema, updateProductSchema, deleteProductSchema, getProductSchema, queryProductSchema } = require('./../schemas/product.schemas');
 
 const router = express.Router();
 const service = new ProductsService();
 
-router.get('/', async (req, res) => {
-  const products = await service.find();
-  res.json(products);
-});
+router.get('/',
+  validatorHandler(queryProductSchema, 'query'),
+  async (req, res, next) => {
+    try {
+      const products = await service.find(req.query);
+      res.json(products);
+    } catch (error) {
+      next(error);
+    }
+  });
 
 router.get('/:id',
   validatorHandler(getProductSchema, 'params'),
@@ -25,25 +31,16 @@ router.get('/:id',
   }
 );
 
-router.get('/category/:category',
-  validatorHandler(getProductCategorySchema, 'params'),
+router.post('/',
+  validatorHandler(createProductSchema, 'body'),
   async (req, res, next) => {
     try {
-      const { category } = req.params;
-      const products = await service.findForCategory(category);
-      res.json(products);
+      const body = req.body;
+      const newProduct = await service.create(body);
+      res.status(201).json(newProduct);
     } catch (error) {
       next(error);
     }
-  }
-);
-
-router.post('/',
-  validatorHandler(createProductSchema, 'body'),
-  async (req, res) => {
-    const body = req.body;
-    const newProduct = await service.create(body);
-    res.status(201).json(newProduct);
   }
 );
 
@@ -64,10 +61,14 @@ router.patch('/:id',
 
 router.delete('/:id',
   validatorHandler(deleteProductSchema, 'params'),
-  async (req, res) => {
-    const { id } = req.params;
-    const product = await service.delete(id);
-    res.json(product);
+  async (req, res, next) => {
+    try {
+      const { id } = req.params;
+      const product = await service.delete(id);
+      res.json(product);
+    } catch (error) {
+      next(error);
+    }
   });
 
 module.exports = router;
