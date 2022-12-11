@@ -19,7 +19,7 @@ class OrderService {
 
     async find(query) {
         const options = {
-            include: ['user'],
+            include: ['user', 'items'],
             where: {}
         }
 
