@@ -3,14 +3,17 @@ import Pollo from "../Assets/img/pollo.jpg";
 import Capuchino from "../Assets/img/Cappuccino-500x500.jpg";
 import Jugo from "../Assets/img/jugo-fresa.jpg";
 import { useState, useEffect } from "react";
+import { useParams } from "react-router-dom";
 
 function MenuChefOrden() {
+    const params = useParams();
+
     const [error, setError] = useState(null);
     const [isLoaded, setIsLoaded] = useState(false);
     const [order, setOrder] = useState([]);
 
     useEffect(() => {
-        fetch("api/v1/orders/3")
+        fetch("http://localhost:3001/api/v1/orders/" + params.id)
             .then(res => res.json())
             .then(
                 (result) => {
@@ -38,6 +41,7 @@ function MenuChefOrden() {
                             <div class="d-flex align-items-center" id="navbarColor01">
                                 <p className="letter-color-menu m-0">Nombre chef</p>
                             </div>
+                            <a href="/chef">Volver</a>
                         </div>
                     </div>
                 </nav>

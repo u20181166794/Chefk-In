@@ -4,6 +4,7 @@ import Login from "./routes/Login";
 import Sign from "./routes/Sign";
 import MenuMesero from "./routes/MenuMesero";
 import MenuChef from './routes/MenuChef';
+import MenuChefOrden from './routes/MenuChefOrden';
 import React from "react";
 
 function App() {
@@ -25,6 +26,9 @@ function App() {
         </Route>
         <Route path="/Chef">
           <MenuChef/>
+        </Route>
+        <Route path="/ChefOrden/:id">
+          <MenuChefOrden/>
         </Route>
       </Switch>
     </Router>
