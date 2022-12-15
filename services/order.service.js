@@ -38,6 +38,11 @@ class OrderService {
         if (status) {
             options.where.status = status;
         }
+
+        const { userId } = query
+        if (userId) {
+            options.where.userId = userId;
+        }
         
         const orders = await models.Order.findAll(options);
         return orders;

@@ -2,7 +2,7 @@ const joi = require('joi');
 
 const id = joi.number().integer();
 const table = joi.number().integer();
-const status = joi.boolean();
+const status = joi.string().min(3).max(20);
 const userId = joi.number().integer();
 
 const orderId = joi.number().integer();
@@ -56,7 +56,8 @@ const queryOrderSchema = joi.object({
   limit,
   offset,
   status,
-  table
+  table,
+  userId
 });
 
 

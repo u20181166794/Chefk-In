@@ -17,7 +17,7 @@ const OrderSchema = {
   },
   status: {
     allowNull: false,
-    type: DataTypes.BOOLEAN,
+    type: DataTypes.STRING,
   },
   userId: {
     field: 'user_id',
