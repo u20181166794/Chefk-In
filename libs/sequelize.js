@@ -4,7 +4,7 @@ const { config } = require('./../config/config');
 const setupModels = require('./../db/models');
 
 const sequelize = new Sequelize(config.dbUrl, {
-  dialect: 'postgres',
+  dialect: 'mysql',
   logging: true,
 });
 
