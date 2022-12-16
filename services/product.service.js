@@ -24,11 +24,15 @@ class ProductService {
             options.limit = limit;
             options.offset = offset;
         }
+        const { name } = query
+        if (name) {
+            options.where.name = name;
+        }
 
         const { categoryId } = query
         if (categoryId) {
             options.where.categoryId = categoryId;
-        }
+        }        
 
         const { status } = query
         if (status) {

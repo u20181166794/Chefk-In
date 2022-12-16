@@ -40,6 +40,7 @@ const getProductSchema = joi.object({
 const queryProductSchema = joi.object({
   limit,
   offset,
+  name,
   categoryId,
   status
 });

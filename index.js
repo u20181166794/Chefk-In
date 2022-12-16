@@ -10,7 +10,7 @@ const port = process.env.PORT || 3001;
 
 app.use(express.json());
 
-const whiteList = ['http://localhost:3000', 'https://chefkinapi.herokuapp.com'];
+const whiteList = ['http://localhost:3000', ''];
 const options = {
     origin: (origin, callback) => {
         if (whiteList.includes(origin) || !origin) {
