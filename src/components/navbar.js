@@ -10,13 +10,22 @@ class Navbar extends Component{
                         <ul class="navbar-nav">
                             <div class="d-flex flex-row">
                                 <li class="nav-item">
-                                    <a class="nav-link letter-color" href="/">Home</a>
+                                    <a class="nav-link letter-color" href="/">Inicio</a>
                                 </li>
                                 <li class="nav-item">
-                                    <a class="nav-link letter-color" href="#">About</a>
+                                    <a class="nav-link letter-color" href="#">Sobre nosotros</a>
                                 </li>
                                 <li class="nav-item">
-                                    <a class="nav-link letter-color" href="#">Contact</a>
+                                    <a class="nav-link letter-color" href="/mesero">Mesero</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link letter-color" href="/chef">Chef</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link letter-color" href="#">Contacto</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link letter-color" href="/dashboard">Dashboard</a>
                                 </li>
                             </div>
                         </ul>    

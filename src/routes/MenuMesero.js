@@ -1,254 +1,190 @@
-import logoMesero from "../Assets/img/logoMesero.png";
-import { useState, useEffect } from "react";
-import { getOrder, newOrderFun, deleteOrden } from '../services/order.service';
-
-// class MenuMesero extends React.Component {
-//     constructor(props) {
-//         super(props);
-//         this.state = { products: [] };
-//     }
-
-//     componentWillMount() {
-//         fetch("http://localhost:3001/api/v1/products")
-//             .then((res) => res.json())
-//             .then((result) => {
-//                 this.setState({ products: result });
-//             },
-//                 (error) => {
-//                     this.setState({
-//                         error
-//                     })
-//                 });
-//     }
-
-//     // render() {
-//     // {
-//     //     this.state.empleados.map((empleado, index) => {
-//     //         return (
-//     //             <div className="container-fluid">
-//     //                 <h2>{empleado.name}</h2>
-//     //                 {/* <EmpleadoList listado={this.state.empleados} /> */}
-//     //             </div>
-//     //         )
-//     //     })
-//     // }
-//     render() {
-//         const { error, products } = this.state;
-//         if (error) {
-//             return <div>Error: {error.message}</div>
-//         }
-//         return (
-//             <div className="container-fluid">
-//                 {products.map(product => (
-//                     <li key={product.id}>
-//                         {product.name} {product.price}
-//                     </li>
-//                 ))}
-//             </div>
-//         );
-//     }
-// }
-
-// export default MenuMesero;
+import Navbar from '../components/navbar';
+import React, { useState, useEffect } from "react";
+import { useParams } from 'react-router-dom';
+import { Link } from "react-router-dom";
+import OrderDataService from "../services/order.service";
+import UserDataService from "../services/user.service";
+import ProductDataService from "../services/product.service";
 
 
+const AddOrder = props => {
+    const { userId } = useParams();
+    const [orders, setOrders] = useState(null);
+    const [pendings, setPendings] = useState(null);
 
-function MenuMesero() {
-
-    const [error, setError] = useState(null);
-    const [isLoaded, setIsLoaded] = useState(false);
-
-    const [products, setProducts] = useState([]);
-    const [order, setOrder] = useState([]);
-    const [users, setUsers] = useState([]);
-
-    const [table, setTable] = useState([]);
-    const [userId, setUserId] = useState([]);
-    const [status, setStatus] = useState([]);
-
-
-    useEffect(() => {
-        fetch("api/v1/products")
-            .then(res => res.json())
-            .then(
-                (result) => {
-                    setIsLoaded(true);
-                    setProducts(result);
-                },
-                // Nota: es importante manejar errores aquí y no en 
-                // un bloque catch() para que no interceptemos errores
-                // de errores reales en los componentes.
-                (error) => {
-                    setIsLoaded(true);
-                    setError(error);
-                }
-            )
-    }, [])
-
-
-    useEffect(() => {
-        fetch("api/v1/users")
-            .then(res => res.json())
-            .then(
-                (result) => {
-                    setIsLoaded(true);
-                    setUsers(result);
-                },
-                // Nota: es importante manejar errores aquí y no en 
-                // un bloque catch() para que no interceptemos errores
-                // de errores reales en los componentes.
-                (error) => {
-                    setIsLoaded(true);
-                    setError(error);
-                }
-            )
-    }, [])
-
-    const handleSubmit = (e) => {
-        e.preventDefault();
-        newOrderFun(table, userId, status)
-            .then(res => {
-                getOrder(res.id)
-                    .then(items => {
-                        setOrder(items)
-                    })
-                setUserId('');
-                setTable('');
-                setStatus('');
-
+    const getOrders = () => {
+        OrderDataService.getUserId(userId)
+            .then(response => {
+                setOrders(response.data);
+            })
+            .catch(e => {
+                console.log(e);
             });
     };
 
+    const getPending = () => {
+        OrderDataService.getPendingUser(userId, "pending")
+            .then(response => {
+                setPendings(response.data);
+            })
+            .catch(e => {
+                console.log(e);
+            });
+    };
 
-    if (error) {
-        return <div>Error: {error.message}</div>;
-    } else if (!isLoaded) {
-        return <div>Loading...</div>;
-    } else {
-        return (
-            <div className="App-login hmax">
+    const initialOrderState = {
+        id: null,
+        table: "",
+        userId: userId,
+        status: "pending"
+    };
 
-                <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-                    <div class="container-fluid d-flex w-100">
-                        <a class="navbar-brand letter-principal" href="/">Chefk In</a>
-                        {
-                            Object.keys(order).length == 0 &&
-                            <form onSubmit={handleSubmit} className="d-flex w-100 justify-content-between">
-                                <div className="d-flex align-items-center">
-                                    <div className="w-40 d-flex flex-row justify-content-between">
-                                        <div class="d-flex align-items-center" id="navbarColor01">
-                                            <p className="letter-color-menu m-0">Nombre Mesero: </p>
-                                            <select
-                                                value={userId}
-                                                onChange={event => setUserId(event.target.value)}
-                                            >
-                                                <option selected>Selecciona...</option>
-                                                {users.map(user => (
-                                                    <option value={user.id} key={user.id}>{user.name}</option>
-                                                ))}
-                                            </select>
-                                        </div>
-                                    </div>
-                                    <div className="w-60 d-flex flex-row">
-                                        <label>Mesa: </label>
-                                        <input type="number" onChange={event => setTable(event.target.value)} value={table} />
-                                    </div>
-                                    <div className="w-60 d-flex flex-row">
-                                        <label>Estado del pedido: </label>
-                                        <select
-                                            value={status}
-                                            onChange={event => setStatus(event.target.value)}
-                                        >
-                                            <option selected>Selecciona...</option>
-                                            <option value="true">En proceso</option>
-                                        </select>
-                                    </div>
-                                </div>
-                                <button type="submit">Nueva orden</button>
-                            </form>
+    const [order, setOrder] = useState(initialOrderState);
+    const [submitted, setSubmitted] = useState(false);
 
-                        }
-                    </div>
-                </nav>
+    const handleInputChange = event => {
+        const { name, value } = event.target;
+        setOrder({ ...order, [name]: value });
+    };
 
-                {
-                    Object.keys(order).length > 0 &&
-                    <div className="d-flex flex-row hmax">
-                        <div className="w-40 resum-box">
-                            <div className="w-75 h-50 m-auto d-flex flex-column" key={order.id}>
-                                {order.items.map(item => (
+    const saveOrder = () => {
+        var data = {
+            table: order.table,
+            userId: order.userId,
+            status: order.status
+        };
 
-                                    <div className="row" key={item.id}>
-                                        <div className="col-6">
-                                            <div className="d-flex flex-column">
+        OrderDataService.create(data)
+            .then(response => {
+                setOrder({
+                    id: response.data.id,
+                    table: response.data.table,
+                    userId: response.data.userId,
+                    status: response.data.status
+                });
+                setSubmitted(true);
+                getPending();
+            })
+            .catch(e => {
+                console.log(e);
+            });
+    };
 
-                                                <p className="font-bold">{item.name}</p>
-                                                <div className="d-flex flex-row justify-content-between">
-                                                    <p className="font-bold">{item.OrderProduct.amount}</p>
-                                                    <p>Unidad(s) a $ {item.price} por unidad</p>
-                                                </div>
+    const newOrder = () => {
+        setOrder(initialOrderState);
+        setSubmitted(false);
+    };
+
+    useEffect(() => {
+        if (userId) {
+            getOrders();
+            getPending();
+
+        }
+    }, [userId]);
+
+    return (
+        <div className="App-login hmax">
+            <Navbar />
+            <div className="submit-form">
+                <div>
+                    {submitted ? (
+                        <div>
+                            <h4>Se ha creado satisfactoriamente la orden!</h4>
+                            <button className="btn btn-success" onClick={newOrder}>
+                                Nueva orden
+                            </button>
+                        </div>
+                    ) : (
+                        <div className="text-center">
+                            <h2>Crear nueva orden</h2>
+                            <label>Mesa</label>
+                            <input
+                                className="form-control w-25 m-auto"
+                                type="number"
+                                value={order.table}
+                                name="table"
+                                id="table"
+                                onChange={handleInputChange}
+                            />
+
+                            <button onClick={saveOrder} className="btn btn-primary mt-3 mb-3">Crear orden</button>
+
+                        </div>
+                    )}
+                </div>
+
+                <div>
+                    <h2 className="text-center">Historial de ordenes</h2>
+                    {orders ? (
+                        <div>
+                            <div className="row mr-0 justify-content-center">
+                                {orders.map(order => (
+                                    <div className="product m-2 col-3" key={order.id}>
+                                        <div className="d-flex flex-column p-2">
+                                            <div className="d-flex flex-row">
+                                                <p className="m-0 price">Mesa No.</p>
+                                                <p className="m-0 ml-4"># {order.table}</p>
                                             </div>
-                                        </div>
-                                        <div className="col-6">
-                                            <div className="d-flex justify-content-end align-items-center w-100 h-100">
-                                                <p className="font-bold">$ {
-
-                                                }</p>
+                                            <div className="d-flex flex-row">
+                                                <p className="m-0 price">Pedido No.</p>
+                                                <p className="m-0"># {order.id}</p>
                                             </div>
                                         </div>
                                     </div>
                                 ))}
-
-                                <div className="col align-self-end">
-                                    <p className="font-bold m-0">Total: ${order.total}</p>
-                                </div>
-                            </div>
-
-                            <div className="w-100 h-50 m-auto panel-box p-4">
-                                <div className="d-flex flex-row w-100 order-button justify-content-center align-items-center">
-                                    <img className="img-mesero" src={logoMesero} />
-                                    <p className="m-0 p-0">Ordenar</p>
-                                </div>
                             </div>
                         </div>
-                        <div className="w-60">
-                            <div className="d-flex flex-column justify-content-center align-items-center">
-                                <div className="d-flex flex-row w-100 category align-items-center">
-                                    <div className="w-20 p-1 category-button">
-                                        <p className="m-0">Plato Principal</p>
-                                    </div>
-                                    <div className="w-20 p-1 category-button">
-                                        <p className="m-0">Sopas</p>
-                                    </div>
-                                    <div className="w-20 p-1 category-button">
-                                        <p className="m-0">Bebidas</p>
-                                    </div>
-                                    <div className="w-40 p-1">
-                                        <form class="d-flex">
-                                            <input class="form-control me-sm-2" type="text" placeholder="Search" />
-                                            <button class="btn btn-secondary my-2 my-sm-0" type="submit">Search</button>
-                                        </form>
-                                    </div>
-                                </div>
-                                <div className="d-flex flex-row">
-                                    {products.map(product => (
-                                        <div className="product w-25 m-2" key={product.id}>
-                                            <p className="m-0 price d-flex justify-content-end">${product.price}</p>
-                                            <img className="w-100" src={product.image} />
-                                            <p className="m-0">{product.name}</p>
-                                            <label>Cantidad</label>
-                                            <input />
-                                            <button>Agregar</button>
+                    ) : (
+                        <div className="text-center">
+                            <button className="btn btn-primary" type="button" disabled>
+                                <span className="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                                Loading...
+                            </button>
+                        </div>
+                    )}
+                </div>
+
+                <div>
+                    <h2 className="text-center">Ordenes pendientes</h2>
+                    {pendings ? (
+                        <div className="row mr-0 justify-content-center">
+                            {pendings.map(pending => (
+                                <div className="product m-2 col-3" key={pending.id}>
+                                    <div className="d-flex flex-column p-2">
+                                        <div className="d-flex flex-row">
+                                            <p className="m-0 price">Mesa No.</p>
+                                            <p className="m-0 ml-4"># {pending.table}</p>
                                         </div>
-                                    ))}
+                                        <div className="d-flex flex-row">
+                                            <p className="m-0 price">Pedido No.</p>
+                                            <p className="m-0"># {pending.id}</p>
+                                        </div>
+                                        <div className="d-flex flex-row">
+                                            <Link
+                                                to={"/MeseroOrden/" + pending.id}
+                                                className="btn btn-success"
+                                            >
+                                                Preparar orden
+                                            </Link>
+                                        </div>
+                                    </div>
                                 </div>
-                            </div>
+                            ))}
                         </div>
-                    </div>
-                }
-            </div>
-        );
-    }
-}
+                    ) : (
+                        <div className="text-center">
+                            <button className="btn btn-primary" type="button" disabled>
+                                <span className="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                                Loading...
+                            </button>
+                        </div>
+                    )}
+                </div>
 
-export default MenuMesero;
+            </div>
+        </div >
+    );
+};
+
+export default AddOrder;

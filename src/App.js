@@ -1,8 +1,10 @@
-import { BrowserRouter as Router, Route, Switch} from "react-router-dom";
+import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import Home from './routes/Home';
 import Login from "./routes/Login";
 import Sign from "./routes/Sign";
+import Dashboard from './routes/Dashboard';
 import MenuMesero from "./routes/MenuMesero";
+import MenuMeseroOrden from './routes/MenuMeseroOrden';
 import MenuChef from './routes/MenuChef';
 import MenuChefOrden from './routes/MenuChefOrden';
 import React from "react";
@@ -13,22 +15,28 @@ function App() {
     <Router>
       <Switch>
         <Route exact path="/" >
-          <Home/>
+          <Home />
         </Route>
         <Route path="/login">
-          <Login/>
+          <Login />
         </Route>
         <Route path="/sign">
-          <Sign/>
+          <Sign />
         </Route>
-        <Route path="/Mesero">
+        <Route path="/dashboard">
+          <Dashboard />
+        </Route>
+        <Route path="/Mesero/:userId">
           <MenuMesero/>
         </Route>
+        <Route path="/MeseroOrden/:id">
+          <MenuMeseroOrden />
+        </Route>
         <Route path="/Chef">
-          <MenuChef/>
+          <MenuChef />
         </Route>
         <Route path="/ChefOrden/:id">
-          <MenuChefOrden/>
+          <MenuChefOrden />
         </Route>
       </Switch>
     </Router>
