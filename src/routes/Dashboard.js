@@ -3,6 +3,7 @@ import React, { useState, useEffect } from "react";
 import ProductDataService from "../services/product.service";
 import CategoryDataService from "../services/category.service";
 import UserDataService from "../services/user.service";
+import "../../node_modules/bootstrap/js/dist/tab";
 
 function Dashboard() {
 
