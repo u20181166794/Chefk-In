@@ -101,20 +101,20 @@ function Dashboard() {
     return (
         <div className="App">
             <Navbar />
-            <div class="container">
-                <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
-                    <li class="nav-item" role="presentation">
-                        <button class="nav-link active" id="pills-user-tab" data-bs-toggle="pill" data-bs-target="#pills-user" type="button" role="tab" aria-controls="pills-user" aria-selected="true">Nuevo usuario</button>
+            <div className="container">
+                <ul className="nav nav-pills mb-3" id="pills-tab" role="tablist">
+                    <li className="nav-item" role="presentation">
+                        <button className="nav-link active" id="pills-user-tab" data-bs-toggle="pill" data-bs-target="#pills-user" type="button" role="tab" aria-controls="pills-user" aria-selected="true">Nuevo usuario</button>
                     </li>
-                    <li class="nav-item" role="presentation">
-                        <button class="nav-link" id="pills-category-tab" data-bs-toggle="pill" data-bs-target="#pills-category" type="button" role="tab" aria-controls="pills-category" aria-selected="false">Nueva categoria</button>
+                    <li className="nav-item" role="presentation">
+                        <button className="nav-link" id="pills-category-tab" data-bs-toggle="pill" data-bs-target="#pills-category" type="button" role="tab" aria-controls="pills-category" aria-selected="false">Nueva categoria</button>
                     </li>
-                    <li class="nav-item" role="presentation">
-                        <button class="nav-link" id="pills-product-tab" data-bs-toggle="pill" data-bs-target="#pills-product" type="button" role="tab" aria-controls="pills-product" aria-selected="false">Nuevo producto</button>
+                    <li className="nav-item" role="presentation">
+                        <button className="nav-link" id="pills-product-tab" data-bs-toggle="pill" data-bs-target="#pills-product" type="button" role="tab" aria-controls="pills-product" aria-selected="false">Nuevo producto</button>
                     </li>
                 </ul>
-                <div class="tab-content" id="pills-tabContent">
-                    <div class="tab-pane fade show active" id="pills-user" role="tabpanel" aria-labelledby="pills-user-tab" tabindex="0">
+                <div className="tab-content" id="pills-tabContent">
+                    <div className="tab-pane fade show active" id="pills-user" role="tabpanel" aria-labelledby="pills-user-tab" tabindex="0">
                         <form onSubmit={saveUser}>
                             <label>Nombre: </label>
                             <input
@@ -163,7 +163,7 @@ function Dashboard() {
                             <button type="submit" className='btn btn-success'>Agregar</button>
                         </form>
                     </div>
-                    <div class="tab-pane fade" id="pills-category" role="tabpanel" aria-labelledby="pills-category-tab" tabindex="0">
+                    <div className="tab-pane fade" id="pills-category" role="tabpanel" aria-labelledby="pills-category-tab" tabindex="0">
                         <form onSubmit={saveCategory}>
                             <label>Nombre: </label>
                             <input
@@ -184,7 +184,7 @@ function Dashboard() {
                             <button type="submit" className='btn btn-success'>Agregar</button>
                         </form>
                     </div>
-                    <div class="tab-pane fade" id="pills-product" role="tabpanel" aria-labelledby="pills-product-tab" tabindex="0">
+                    <div className="tab-pane fade" id="pills-product" role="tabpanel" aria-labelledby="pills-product-tab" tabindex="0">
                         <form onSubmit={saveProduct}>
                             <label>Nombre: </label>
                             <input

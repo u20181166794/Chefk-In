@@ -6,7 +6,7 @@ import Dashboard from './routes/Dashboard';
 import MenuMesero from "./routes/MenuMesero";
 import MenuMeseroOrden from './routes/MenuMeseroOrden';
 import MenuChef from './routes/MenuChef';
-import MenuChefOrden from './routes/MenuChefOrden';
+import DocInicio from './documentacion/DocInicio';
 import React from "react";
 
 function App() {
@@ -35,8 +35,8 @@ function App() {
         <Route path="/Chef">
           <MenuChef />
         </Route>
-        <Route path="/ChefOrden/:id">
-          <MenuChefOrden />
+        <Route path="/docInicio">
+          <DocInicio />
         </Route>
       </Switch>
     </Router>

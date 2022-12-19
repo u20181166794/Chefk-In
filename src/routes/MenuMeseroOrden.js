@@ -178,9 +178,9 @@ const MenuMeseroOrden = props => {
                                             </div>
                                             {/* ========== Enter the name of the product to filter and display the filtered product ========== */}
                                             <div className="w-60 p-1">
-                                                <form class="d-flex">
+                                                <form className="d-flex">
                                                     <input
-                                                        class="form-control me-sm-2"
+                                                        className="form-control me-sm-2"
                                                         type="text"
                                                         placeholder="Search"
                                                         value={searchName}

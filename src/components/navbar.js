@@ -1,40 +1,38 @@
-import React, {Component} from "react";
+import React from "react";
 
-class Navbar extends Component{
-    render(){
+const Navbar = ()=>{
         return(
-            <nav class="navbar navbar-expand-lg">
-                <div class="container-fluid d-flex justify-content-between w-100">
-                    <a class="navbar-brand letter-principal" href="/">Chefk In</a>
-                    <div class="collapse navbar-collapse justify-content-center" id="navbarColor01">
-                        <ul class="navbar-nav">
-                            <div class="d-flex flex-row">
-                                <li class="nav-item">
-                                    <a class="nav-link letter-color" href="/">Inicio</a>
+            <nav className="navbar navbar-expand-lg">
+                <div className="container-fluid d-flex justify-content-between w-100">
+                    <a className="navbar-brand letter-principal" href="/">Chefk In</a>
+                    <div className="collapse navbar-collapse justify-content-center" id="navbarColor01">
+                        <ul className="navbar-nav">
+                            <div className="d-flex flex-row">
+                                <li className="nav-item">
+                                    <a className="nav-link letter-color" href="/">Inicio</a>
                                 </li>
-                                <li class="nav-item">
-                                    <a class="nav-link letter-color" href="#">Sobre nosotros</a>
+                                <li className="nav-item">
+                                    <a className="nav-link letter-color" href="/docInicio">Como Usarlo</a>
                                 </li>
-                                <li class="nav-item">
-                                    <a class="nav-link letter-color" href="/mesero">Mesero</a>
+                                <li className="nav-item">
+                                    <a className="nav-link letter-color" href="/mesero">Mesero</a>
                                 </li>
-                                <li class="nav-item">
-                                    <a class="nav-link letter-color" href="/chef">Chef</a>
+                                <li className="nav-item">
+                                    <a className="nav-link letter-color" href="/chef">Chef</a>
                                 </li>
-                                <li class="nav-item">
-                                    <a class="nav-link letter-color" href="#">Contacto</a>
+                                <li className="nav-item">
+                                    <a className="nav-link letter-color" href="#">Contacto</a>
                                 </li>
-                                <li class="nav-item">
-                                    <a class="nav-link letter-color" href="/dashboard">Dashboard</a>
+                                <li className="nav-item">
+                                    <a className="nav-link letter-color" href="/dashboard">Dashboard</a>
                                 </li>
                             </div>
                         </ul>    
                     </div>
-                    <a class="navbar-brand letter-color" href="/login">Sign In</a>
+                    <a className="navbar-brand letter-color" href="/login">Sign In</a>
                 </div>
             </nav>
         );
     }
-}
 
 export default Navbar;
