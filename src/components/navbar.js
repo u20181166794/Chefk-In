@@ -21,9 +21,6 @@ const Navbar = ()=>{
                                     <a className="nav-link letter-color" href="/chef">Chef</a>
                                 </li>
                                 <li className="nav-item">
-                                    <a className="nav-link letter-color" href="#">Contacto</a>
-                                </li>
-                                <li className="nav-item">
                                     <a className="nav-link letter-color" href="/dashboard">Dashboard</a>
                                 </li>
                             </div>
